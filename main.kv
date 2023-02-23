@@ -1,0 +1,1963 @@
+#:import utils kivy.utils
+#:import Factory kivy.factory.Factory
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+
+OneAbove:
+    do_default_tab: False
+    tab_pos: 'top_mid'
+    tab_width: root.width/5
+    tab_height: root.height/18
+    background_image: "images/ground.png"
+    canvas:
+        Color:
+            rgb: utils.get_color_from_hex('#002B4A')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    TabbedPanelItem:
+
+        background_normal:"images/logotab.png" 
+        background_down:"images/logotab.png"
+        BoxLayout:
+            orientation:"vertical"
+            spacing: 0
+            padding:0
+            #canvas.before:
+            #    Color:
+            #        rgba:(1,2,3,1)
+            #    Line:
+            #        width: 2
+            #        rectangle: self.x, self.y, self.width, self.height
+            Label:
+                size_hint:(1, .4)
+                canvas:
+                    Rectangle:
+                        pos: self.pos
+                        size:self.size
+                        source: "images/logo2.png"
+            Label:
+                text:"Welcome Athletes"
+                font_name:"Impact"
+                size_hint:(1, .1)
+                font_size:40
+                halign: "center"
+            Label:
+                size_hint:(1, .3)
+                text:"Over Timers is for the athlete without a coach around 24/7, who is looking to put in work.\nOver Timers is a highly customizable timers app, made to be fit into every Athletes needs with only alittle creativity.\nIn the Drills Tab you will find set audio-based drills.\n In the Timers Tab you will find customizable Timers, only your creativity will limit you.\n In the Condi Tab you will find conditioning.\n In the Visual Tab you will find highly customizable visual timers, to train your eyes "
+                markup: True
+                text_size:self.size
+                halign:"center"
+                valign:"top"
+            Label:
+                size_hint:(1,.05)
+                text:"For The Driven"
+                font_size:40
+                font_name:"Impact"
+                underline: True
+            
+            BoxLayout:
+                size_hint:(1, .1)
+                #links
+                orientation:"vertical"
+                spacing: 10
+                padding: 10
+                #BoxLayout:
+                #    spacing: 5
+                #    padding: 0
+                #    size_hint:(1, .9)
+                #    orientation:"horizontal"
+                #    Button:
+                #        #size_hint:(.3, .3)
+                #        background_color: 0,0,0,0
+                #        canvas:
+                #            Rectangle:
+                #                size: (100,100) # choose a value of a which fit the most with your button
+                #                pos: (self.pos[0]+self.size[0]/2.0) - 100/2.0, (self.pos[1]+self.size[1]/2.0) - 100/2.0
+                #                source: "images\ig.png"
+                #        #ig
+
+                #    Button:
+                #        #size_hint:(.33, .3)
+                #        background_color: 0,0,0,0
+                #        canvas:
+                #            Rectangle:
+                #                size: (150,150) # choose a value of a which fit the most with your button
+                #                pos: (self.pos[0]+self.size[0]/2.0) - 150/2.0, (self.pos[1]+self.size[1]/2.0) - 150/2.0
+                #                source: "images\yt.png"
+                        
+                BoxLayout:
+                    size_hint:(1, .1)
+                    Label:
+                        font_size:10
+                        text:"Over Timers IG, overtimers@gmail.com"
+
+                
+                
+    TabbedPanelItem:
+        text:"Drills"
+        on_press: root.resetdrill()
+        background_color: utils.get_color_from_hex('#003C65')
+        color: 1,1,1,1
+        ScrollView:
+            ScreenManager:
+                transition: NoTransition()
+                id: manager  
+                size_hint_y: None
+                height: self.current_screen.height# only seems to work for first Screen
+                on_current_screen: self.height = self.current_screen.height  # required because above line failure
+                MainScreen:
+                    name: 'main'
+                    size_hint_y: None
+                    height: grid.height # set this Screen height to the height of the GridLayout
+                    canvas:
+                        Color:
+                            rgb: utils.get_color_from_hex('#003C65')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                            
+                    GridLayout:
+                        id: grid
+                        size_hint_y: None
+                        height: self.minimum_height # set this height to the minimum required
+                        spacing: 20
+                        padding: 10
+                        cols:1
+                        row_default_height: root.height/2 #height of grids #everybutton is half the screen
+                        row_force_default: False
+                        Button:
+                            font_name:"Impact"
+
+                            text: 'Square Drill'
+                            halign:"center"
+                            on_press: manager.current = 'first'
+                            background_normal: "images/squaredrill.png" #det her giver langsomt opstart
+                            font_size: 50
+                            underline: True
+                        Button:
+                            font_name:"Impact"
+
+                            text: 'C.O.D Drill'
+                            on_press: manager.current = 'second'
+                            background_normal: "images/lipdrill.png" # det her giver langsomt opstart
+                            color: (1,1,1,1)
+                            font_size: 50
+                            underline: True
+                        Button:
+                            font_name:"Impact"
+
+                            text: '4 Drill'
+                            on_press: manager.current = 'third'
+                            background_normal: "images/efourwaydrillbutton.png" #det her giver langsomt opstart
+                            underline: True
+                            color: (1,1,1,1)
+                            font_size: 50
+                        Button:
+                            text: 'Hip Flip'
+                            font_name:"Impact"
+
+                            on_press: manager.current = 'fourth'
+                            background_normal: "images/erealflipdrill.png" #det her giver langsomt opstart
+                            underline: True
+                            color: (1,1,1,1)
+                            font_size: 50
+                        
+                SquareDrill:
+                    name: 'first'
+                    height: root.height - root.height/18
+                    size_hint_max: root.size #her kan der være noget for stort eller småt
+
+                CODDrill:
+                    name: 'second'
+                    height: root.height -root.height/18
+                    size_hint_max: root.size
+
+                FourWay:
+                    name: 'third'
+                    height: root.height -root.height/18
+                    size_hint_max: root.size
+                HipFlip:
+                    name: 'fourth'
+                    height: root.height -root.height/18
+                    size_hint_max: root.size
+
+
+
+
+    TabbedPanelItem:
+        text:"Timers"
+        background_color: utils.get_color_from_hex('#003C65')
+        color: 1,1,1,1
+        on_press: root.timersreset()
+
+        ScrollView:
+            ScreenManager:
+                transition: NoTransition()
+                id: timemanager 
+                size_hint_y: None
+                height: self.current_screen.height  # only seems to work for first Screen
+                on_current_screen: self.height = self.current_screen.height  # required because above line failure
+
+                TimerMain:
+                    name: 'timermain'
+                    size_hint_y: None
+                    height: gridt.height  # set this Screen height to the height of the GridLayout
+                    canvas:
+                        Color:
+                            rgb: utils.get_color_from_hex('#003C65')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    GridLayout:
+                        id: gridt
+                        size_hint_y: None
+                        height: self.minimum_height  # set this height to the minimum required
+                        spacing: 20
+                        padding: 10
+                        cols:1
+                        row_default_height: root.height/2 #height of grids
+                        row_force_default: True
+                       
+                        Button:
+                            text: 'Stopwatch'
+                            on_press: timemanager.current = 'stopwatch'  
+                            font_size: 50
+                            background_normal: "images/ground.png" # det her giver langsomt opstart
+                            underline: True
+                            font_name:"Impact"
+
+                        Button:
+                            text: 'Interval Timer'
+                            on_press: timemanager.current = 'interval' 
+                            font_size: 50
+                            background_normal: "images/ground.png" # det her giver langsomt opstart
+                            underline: True
+                            font_name:"Impact"
+
+                        Button:
+                            text:'Select Timer'
+                            on_press: timemanager.current = 'program'
+                            font_size: 50
+                            background_normal: "images/ground.png" # det her giver langsomt opstart
+                            underline: True
+                            font_name:"Impact"
+
+                        Button:
+                            text:'Linear Timer'
+                            on_press: timemanager.current = 'line'
+                            font_size: 50
+                            background_normal: "images/ground.png" # det her giver langsomt opstart
+                            underline: True
+                            font_name:"Impact"
+
+                        Button:
+                            text:'Go Timer'
+                            on_press: timemanager.current = 'ding'
+                            font_size: 50
+                            background_normal: "images/ground.png" # det her giver langsomt opstart
+                            underline: True
+                            font_name:"Impact"
+
+
+                        Button:
+                            text:'Tabata Timer'
+                            on_press: timemanager.current = 'tabata'
+                            font_size: 50
+                            background_normal: "images/ground.png" # det her giver langsomt opstart
+                            underline: True
+                            font_name:"Impact"
+
+                        
+                        
+                StopWatch:
+                    name: 'stopwatch'
+                    height: root.height - root.height/18
+                    size_hint_max: root.size
+
+
+                IntervalTimer:
+                    name: 'interval'
+                    height: root.height -root.height/18
+                    size_hint_max: root.size
+
+
+                TabataTimer:
+                    name: 'tabata'
+                    height: root.height -root.height/18
+                    size_hint_max: root.size
+                DingTimer:
+                    name: 'ding'
+                    height: root.height -root.height/18
+                    size_hint_max: root.size
+
+                ProgTimer:
+                    name: 'program'
+                    height: root.height -root.height/18
+                    size_hint_max: root.size
+                LineTimer:
+                    name:'line'
+                    height: root.height -root.height/18
+                    size_hint_max: root.size
+
+    TabbedPanelItem:
+        text:"Condi"
+        background_color: utils.get_color_from_hex('#003C65')
+        color: 1,1,1,1
+        on_press: root.condireset()
+        ScrollView:
+            ScreenManager:
+                transition: NoTransition()
+                id: condimanager 
+                size_hint_y: None
+                height: self.current_screen.height  # only seems to work for first Screen
+                on_current_screen: self.height = self.current_screen.height  # required because above line failure
+                
+                MainCondi:
+                    name: 'maincondi'
+                    size_hint_y: None
+                    height: gridc.height  # set this Screen height to the height of the GridLayout
+                    canvas:
+                        Color:
+                            rgb: utils.get_color_from_hex('#003C65')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                            
+                    GridLayout:
+                        id: gridc
+                        size_hint_y: None
+                        height: self.minimum_height  # set this height to the minimum required
+                        spacing: 20
+                        padding: 10
+                        cols:1
+                        row_default_height: root.height/2 #height of grids
+                        row_force_default: True
+                        
+                        Button:
+                            text: 'Beep Test'
+                            halign:"center"
+                            on_press: condimanager.current = 'beep'
+                            color: (1,1,1,1)
+                            font_size: 50
+                            underline: True
+                            background_normal: "images/ground.png"
+                            font_name:"Impact"
+
+                        Button:
+                            text: 'Coming soon'
+                            halign:"center"
+                            color: (1,1,1,1)
+                            font_size: 50
+                            underline: True
+                            background_normal: "images/ground.png"
+                        
+                        Label:#remove later
+                            text:"Coming soon"
+                            canvas:
+                                Color:
+                                    rgb: utils.get_color_from_hex('#003C65')
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                BeepTest:
+                    name: 'beep'
+                    height: root.height - root.height/18
+                    size_hint_max: root.size
+                
+    TabbedPanelItem:
+        text:"Visual"
+        background_color: utils.get_color_from_hex('#003C65')
+        color: 1,1,1,1
+        on_press: root.visualreset()
+        ScrollView:
+            ScreenManager:
+                transition: NoTransition()
+
+                id: visualmanager 
+                size_hint_y: None
+                height: self.current_screen.height  # only seems to work for first Screen
+                on_current_screen: self.height = self.current_screen.height  # required because above line failure
+                
+                MainCondi:
+                    name: 'mainvisual'
+                    size_hint_y: None
+                    height: gridv.height  # set this Screen height to the height of the GridLayout
+                    canvas:
+                        Color:
+                            rgb: utils.get_color_from_hex('#003C65')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                            
+                    GridLayout:
+                        id: gridv
+                        size_hint_y: None
+                        height: self.minimum_height  # set this height to the minimum required
+                        spacing: 20
+                        padding: 10
+                        cols:1
+                        row_default_height: root.height/2 #height of grids
+                        row_force_default: True
+                        
+                        Button:
+                            text: 'Flash Timer'
+                            halign:"center"
+                            on_press: visualmanager.current = 'color'
+                            color: (1,1,1,1)
+                            font_size: 45
+                            underline: True
+                            background_normal: "images/ground.png"
+                            font_name:"Impact"
+
+                        Button:
+                            text: 'Single Reaction'
+                            on_press: visualmanager.current = 'onecolor'
+                            halign:"center"
+                            color: (1,1,1,1)
+                            font_size: 50
+                            underline: True
+                            background_normal: "images\ground.png"
+                            font_name:"Impact"
+
+                        Label:#remove later
+                            canvas:
+                                Color:
+                                    rgb: utils.get_color_from_hex('#003C65')
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                ColorTimer:
+                    name: 'color'
+                    height: root.height - root.height/18
+                    size_hint_max: root.size
+                OneClrTimer:
+                    name: 'onecolor'
+                    height: root.height - root.height/18
+                    size_hint_max: root.size
+
+                
+
+
+<SquareDrill>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+
+            BoxLayout:
+                size_hint:(1,1.1)
+                Image:
+                    source: root.img_src
+                    id: bongbong
+                    allow_strech: True
+                    keep_ratio:False
+                    canvas:
+                        Rectangle:
+                            source:self.source
+                            pos:self.pos
+                            size:self.size
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: (1, .4)
+                CountDown:
+                    multiline: False
+                    id:text_input
+                    text:'00:00'
+                    halign:"center"
+                    font_size: 100
+                    on_focus: root.refereshsqd()
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .2)
+                Display:
+                    size_hint:(.6, 1)
+                    text:"Interval:"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    
+                    
+
+                CountDown:
+                    size_hint:(.4, 1)
+                    id:interval
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+
+                Display:
+                    size_hint:(.2,1)
+                    text:"to"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                CountDown:
+                    size_hint:(.4, 1)
+                    id:sqdintervalto
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .3)
+
+                Pushbuttons:
+                    text:"start"
+                    id:button
+                    on_press: root.toggle()
+                    halign:"center"
+                Pushbuttons:
+                    text: "reset"
+                    on_press: root.reset()
+                    halign:"center"
+
+
+                Pushbuttons:
+                    text: 'Back'
+                    on_press: root.manager.current = 'main'
+                    on_press: root.reset()
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': 1, 'right':1}
+            on_press:Factory.SqdPop().open()
+            
+<CODDrill>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+            BoxLayout:
+                size_hint:(1,1.1)
+                Image:
+                    source: root.hipimgsrc
+                    id: hipimage
+                    allow_strech: True
+                    canvas:
+                        Rectangle:
+                            source:self.source
+                            pos:self.pos
+                            size:self.size
+            BoxLayout:
+                size_hint: (1, .4)
+                CountDown:
+                    id:hipinput
+                    text:'00:00'
+                    halign:"center"      
+                    font_size: 90
+                    multiline: False
+                    on_focus: root.refereshsqd()
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .2)
+
+                Spinner:
+                    size_hint:(.1,1)
+
+                    id:flipspinner
+                    text:"mode"
+                    values: ["Direction", "Numbers"]
+                    on_text: root.flipchooser(flipspinner.text)
+                    halign:"center"
+                    option_cls: Factory.get("MySpinnerOption")
+                    background_color: utils.get_color_from_hex('#002B4A')
+
+                Display:
+                    size_hint:(.2,1)
+                    text:"Interval:"
+                    font_size: 30
+                    halign:"center"
+                CountDown:
+                    size_hint:(.1,1)
+                    id:hipinterval
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+
+                Display:
+                    size_hint:(.1,1)
+                    text:"to"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                CountDown:
+                    size_hint:(.1, 1)
+                    id:hipintervalto
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+                
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .3)
+
+                Pushbuttons:
+                    text:"start"
+                    id:hipbutton
+                    on_press: root.hiptoggle()
+                    halign:"center"
+                
+                Pushbuttons:
+                    text: "reset"
+                    on_press: root.hipreset()
+                    halign:"center"
+
+                Pushbuttons:
+                    text: 'Back'
+                    on_press: root.manager.current = 'main'
+                    on_press: root.hipreset()
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': 1, 'right':1}
+
+            on_press:Factory.CODPop().open()
+<FourWay>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+
+            BoxLayout:
+                size_hint:(1,1.1)
+                Image:
+                    source: root.img_src
+                    id: fourimg
+                    allow_strech: True
+                    canvas:
+                        Rectangle:
+                            source:self.source
+                            pos:self.pos
+                            size:self.size
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: (1, .4)
+                CountDown:
+                    multiline: False
+                    id:fourinput
+                    text:'00:00'
+                    halign:"center"
+                    font_size: 100
+                    on_focus: root.refereshfour()
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .2)
+                Display:
+                    size_hint:(.4, 1)
+                    text:"Interval:"
+                    font_size: 20
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    
+                    
+
+                CountDown:
+                    size_hint:(.4, 1)
+                    id:fourinterval
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+
+                Display:
+                    size_hint:(.2,1)
+                    text:"to"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                CountDown:
+                    size_hint:(.4, 1)
+                    id:fourintervalto
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+
+
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .3)
+
+                Pushbuttons:
+                    text:"start"
+                    id:fourbutton
+                    on_press: root.fourtoggle()
+                    halign:"center"
+                Pushbuttons:
+                    text: "reset"
+                    on_press: root.fourreset()
+                    halign:"center"
+
+
+                Pushbuttons:
+                    text: 'Back'
+                    on_press: root.manager.current = 'main'
+                    on_press: root.fourreset()
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': 1, 'right':1}
+            on_press:Factory.FourPop().open()
+#timerscreens
+<HipFlip>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+
+            BoxLayout:
+                size_hint:(1,1.1)
+                Image:
+                    source: root.img_src
+                    id: dbimg
+                    allow_strech: True
+                    canvas:
+                        Rectangle:
+                            source:self.source
+                            pos:self.pos
+                            size:self.size
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: (1, .4)
+                CountDown:
+                    multiline: False
+                    id:dbinput
+                    text:'00:00'
+                    halign:"center"
+                    font_size: 100
+                    on_focus: root.refereshdb()
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .2)
+                Display:
+                    size_hint:(.6, 1)
+                    text:"Interval:"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    
+                    
+
+                CountDown:
+                    size_hint:(.4, 1)
+                    id:dbinterval
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+
+                Display:
+                    size_hint:(.2,1)
+                    text:"to"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                CountDown:
+                    size_hint:(.4, 1)
+                    id:dbintervalto
+                    text:"1"
+                    halign:"center"
+                    font_size: 40
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .3)
+
+                Pushbuttons:
+                    text:"start"
+                    id:dbbutton
+                    on_press: root.dbtoggle()
+                    halign:"center"
+                Pushbuttons:
+                    text: "reset"
+                    on_press: root.dbreset()
+                    halign:"center"
+
+
+                Pushbuttons:
+                    text: 'Back'
+                    on_press: root.manager.current = 'main'
+                    on_press: root.dbreset()
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': 1, 'right':1}
+            on_press:Factory.HipPop().open()
+<StopWatch>
+    BoxLayout:
+        orientation: "vertical"
+        Display:
+            id: stopwatch
+            text: '00:00:00'
+            font_size: 80
+        BoxLayout:
+            orientation:"horizontal"
+            size_hint:(1, .3)
+
+            Pushbuttons:
+                id: start_stop
+                text: 'Start'
+                on_press: root.startsw()
+
+            Pushbuttons:
+                id: reset
+                text: 'Reset'
+                on_press: root.swreset()
+                
+            Pushbuttons:
+                text:"back"
+                on_press: root.manager.current = 'timermain'
+                on_press: root.swreset()
+<IntervalTimer>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+            Display:
+                id:ivtshow
+                text: "00:00"
+                font_size: 120
+                halign:"center"
+                
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .2)
+
+                Spinner:
+                    id:ivtspinner
+                    text:"mode"
+                    values: ["Time Input", "Rounds"]
+                    on_text: root.ivtchooser(ivtspinner.text)
+                    halign:"center"
+                    background_color: utils.get_color_from_hex('#002B4A')
+                    option_cls: Factory.get("MySpinnerOption")
+
+                CountDown:
+                    id:ivtinput
+                    text: "Select Mode"
+                    halign:"center"
+                    font_size:30
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .3)
+
+                Display:
+                    id:ivton
+                    text: "Time on"
+                    font_size: 48
+                    halign:"center"
+                    
+
+                Display:
+                    id:ivtoff
+                    text: "Time off"
+                    font_size: 48
+                    halign:"center"
+                    
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .2)
+
+                CountDown:
+                    id:ivtinputon
+                    text: "00:00"
+                    halign:"center"
+                    font_size: 40
+                CountDown:
+                    id:ivtinputoff
+                    text: "00:00"
+                    halign:"center"
+                    font_size: 40
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .3)
+
+                Pushbuttons:
+                    text:"start"
+                    id: ivtstartbutton
+                    on_press: root.ivttoggle()
+                    halign:"center"
+                
+                Pushbuttons:
+                    text:"reset"
+                    id: ivtreset
+                    on_press: root.ivtreset()
+                    halign:"center"
+
+                Pushbuttons:
+                    text:"back"
+                    on_press: root.manager.current = 'timermain'
+                    on_press: root.ivtreset()
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': 1, 'right':1}
+            on_press:Factory.IvtPop().open()
+<TabataTimer>
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            id:tabatashow
+            text: "08:00"
+            font_size: 120
+            halign:"center"
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: (1, .2)
+            Label:
+                text:"Time On"
+                font_size: 30
+                canvas.before:
+                    Color:
+                        rgb: utils.get_color_from_hex('#002B4A')
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+
+            Label:
+                text:"Time Off"
+                font_size: 30
+                canvas.before:
+                    Color:
+                        rgb: utils.get_color_from_hex('#002B4A')
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+        BoxLayout:
+            orientation:"horizontal"
+            Display:
+                id:labelon
+                text: "00:40"
+                font_size: 50
+                halign:"center"
+            Display:
+                id:labeloff
+                text: "00:20"
+                font_size: 50
+                halign:"center"
+        BoxLayout:
+            orientation:"horizontal"
+            size_hint: (1, .4)
+       
+            Pushbuttons:
+                text:"start"
+                id: ttstartbutton
+                on_press: root.workon()
+                halign:"center"
+            
+            Pushbuttons:
+                text:"reset"
+                id: ttresetbutton
+                on_press: root.tabatareset()
+                halign:"center"
+
+            Pushbuttons:
+                text:"back"
+                on_press: root.manager.current = 'timermain'
+                on_press: root.tabatareset()
+<DingTimer>
+    FloatLayout:
+        BoxLayout:
+            orientation: "vertical"
+            Display:
+                id: dingtimer
+                text: '00:00'
+                font_size: 80
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .2)
+                Display:
+                    size_hint:(.6, 1)
+                    text:"Interval:"
+                    font_size: 30
+                    halign:"center"
+                    
+                CountDown:
+                    size_hint:(.4, 1)
+                    id:dinginterval
+                    text: "01"
+                    halign:"center"
+                    font_size: 40
+            
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .3)
+                
+                Pushbuttons:
+                    id: dingstartstop
+                    text: 'Start'
+                    on_press: root.startding()
+
+                Pushbuttons:
+                    id: dingreset
+                    text: 'Reset'
+                    on_press: root.dingreset()
+                    
+                Pushbuttons:
+                    text:"back"
+                    on_press: root.manager.current = 'timermain'
+                    on_press: root.dingreset()
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': 1, 'right':1}
+            on_press:Factory.DingPop().open()
+<ProgTimer>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex('#002B4A')
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: (1, .4)
+                CountDown:
+                    multiline: False
+                    id:proginput
+                    text:'00:00'
+                    halign:"center"
+                    font_size: 100
+                    on_focus: root.refereshprog()
+
+            BoxLayout:
+                orientation:"horizontal"
+                BoxLayout:
+                    orientation:"horizontal"
+                    BoxLayout:
+                        orientation:"vertical"
+                        Label:
+                            text:"1"
+                        Label:
+                            text:"2"
+                        Label:
+                            text:"3"
+                        Label:
+                            text:"4"
+                        Label:
+                            text:"5"
+                        Label:
+                            text:"6"
+                        Label:
+                            text:"7" 
+                        Label:
+                            text:"8"
+                            
+                        Label:
+                            text:"9"
+                            
+                        Label:
+                            text:"10"
+                        Label:
+                            text:"left"
+                        Label:
+                            text:"right"
+                        Label:
+                            text:"back"
+                        Label:
+                            text:"forward"
+
+                            
+                    BoxLayout:
+                        orientation:"vertical"
+                        id:boxy
+                        canvas:
+                            Color:
+                                rgba:(0,0,0,1)
+                            Rectangle:
+                                size:self.size
+                                pos:self.pos
+                        CheckBox:
+                            id:one
+                            on_active: root.chooser(self, self.active, "one")
+                            
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "two")
+                            id:two
+                        CheckBox:
+                            id:three
+                            on_active: root.chooser(self, self.active, "three")
+
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "four")
+
+                            id:four
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "five")
+
+                            id:five
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "six")
+
+                            id:six
+                        CheckBox:
+
+                            on_active: root.chooser(self, self.active, "seven")
+                            id:seven
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "eight")
+                            id:eight
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "nine")
+                            id:nine
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "ten")
+                            id:ten
+
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "left")
+                            id:left
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "right")
+                            id:right
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "back")
+                            id:back
+                        CheckBox:
+                            on_active: root.chooser(self, self.active, "forward")
+                            id:forward
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .2)      
+                Display:
+                    size_hint:(.2,1)
+                    text:"Interval:"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+
+                CountDown:
+                    size_hint:(.1,1)
+                    id:progcd
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+                Display:
+                    size_hint:(.1,1)
+                    text:"to"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                CountDown:
+                    size_hint:(.1, 1)
+                    id:progcdto
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .3)
+
+                Pushbuttons:
+                    text:"start"
+                    id:progstart
+                    on_press: root.progtoggle()
+                    halign:"center"
+                Pushbuttons:
+                    text: "reset"
+                    on_press: root.progreset()
+                    halign:"center"
+
+                Pushbuttons:
+                    text:"back"
+                    on_press: root.manager.current = 'timermain'
+                    on_press: root.progreset()
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': 1, 'right':1}
+            on_press:Factory.SelectPop().open()
+
+<LineTimer>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex('#002B4A')
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: (1, .4)
+                CountDown:
+                    multiline: False
+                    id:lineinput
+                    text:'00:00'
+                    halign:"center"
+                    font_size: 100
+                    on_focus: root.refereshline()
+                Display:
+                    size_hint:(1,.2)
+                    halign:"center"
+                    text_size:self.size
+                    id: list
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+            BoxLayout:
+                size_hint:(1, .6)
+                orientation:"horizontal"
+                BoxLayout:
+                    orientation:"horizontal"
+                    BoxLayout:
+                        orientation:"vertical"
+                        Label:
+                            text:"1"
+                        Label:
+                            text:"2"
+                        Label:
+                            text:"3"
+                        Label:
+                            text:"4"
+                        Label:
+                            text:"5"
+                        Label:
+                            text:"6"
+                        Label:
+                            text:"7" 
+                        Label:
+                            text:"8"
+                            
+                        Label:
+                            text:"9"
+                            
+                        Label:
+                            text:"10"
+                        Label:
+                            text:"left"
+                        Label:
+                            text:"right"
+                        Label:
+                            text:"back"
+                        Label:
+                            text:"down"
+
+                            
+                    BoxLayout:
+                        orientation:"vertical"
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.en()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.to()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.tre()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.fire()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.fem()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.seks()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.syv()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.otte()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.ni()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.ti()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.left()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.right()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.back()
+                        Pushbuttons:
+                            text:"add"
+                            on_press:root.down()
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .1)      
+                Display:
+                    size_hint:(.2,1)
+                    text:"Interval:"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+
+                CountDown:
+                    size_hint:(.1,1)
+                    id:lineinterval
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+                Display:
+                    size_hint:(.1,1)
+                    text:"to"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                CountDown:
+                    size_hint:(.1, 1)
+                    id:lineintervalto
+                    text: "1"
+                    halign:"center"
+                    font_size: 40
+
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .1)
+
+                Pushbuttons:
+                    text:"start"
+                    id:linestart
+                    on_press: root.linetoggle()
+                    halign:"center"
+                Pushbuttons:
+                    text: "reset"
+                    on_press: root.linereset()
+                    halign:"center"
+
+                Pushbuttons:
+                    text:"back"
+                    on_press: root.manager.current = 'timermain'
+                    on_press: root.linereset()
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': 1, 'right':1}
+            on_press:Factory.LinePop().open()
+#Condi screens
+<BeepTest>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+            BoxLayout:
+                canvas:
+                    Color:
+                        rgb: utils.get_color_from_hex('#002B4A')
+
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                size_hint:(1, 1.4)
+                Image:
+                    source: root.beepimg
+                    id: beepimg
+                    allow_strech: True
+                    canvas:
+                        Rectangle:
+                            source:self.source
+                            pos:self.pos
+                            size:self.size
+                    
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: (1, .31)
+                Label:
+                    id: beeptimer
+                    text: "00:00"
+                    font_size: 90
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+            
+            #BoxLayout: vo2 label skal laves på et tidspunkt
+            #   size_hint:(1, .2)
+            #  Display:
+            #     text: "VO2 Max: 00"
+            
+            BoxLayout:
+                size_hint:(1, .2)
+                Display:
+                    id: shuttledisplay
+                    text: "Shuttles: 00"
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint:(1, .2)
+                Display:
+                    text: "Speed: 00"
+                    id: beepspeed
+                Display: 
+                    text: "Level: 00"
+                    id: beeplevel
+            #spinner til vo2 maxet
+    #        BoxLayout:
+    #           orientation: "horizontal"
+    #          size_hint:(1, .1)
+
+    #            Spinner:#alder spinner
+    #               id:alderspinner
+    #              text:"Age"
+    #             values: ["5-14", "15-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70+", "None"]
+        #            on_text: root.spinnerage(alderspinner.text)
+        #           halign:"center"
+
+        #      Spinner:#
+        #         id:kønspinner
+            #        text:"Gender"
+            #       values: ["Male", "Female", "None"]
+            #      on_text: root.spinnergender(kønspinner.text)
+            #     halign:"center"
+
+            
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .2)
+                
+                Pushbuttons:
+                    id: beepstart
+                    text: 'Start'
+                    on_press: root.beepstart()
+
+                Pushbuttons:
+                    text:"back"
+                    on_press: root.manager.current = 'maincondi'
+                    on_press: root.beepreset()
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': 1, 'right':1}
+            on_press:Factory.BeepPop().open()    
+
+#Visual screens
+<ColorTimer>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+
+            BoxLayout:
+                size_hint:(1,1.1)
+                
+                Display:
+                    color:(1,1,1,1)
+                    id:colorlabel
+                    background_color:(0,43,71,0)
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    font_size: 600
+                    text:"1"
+
+
+                    
+            BoxLayout:
+                size_hint: (1, .1)
+
+                CountDown:
+                    id:clrinput
+                    text:'00:00'
+                    halign:"center"      
+                    font_size: 20
+                    multiline: False
+                    on_focus: root.refereshclr()
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .1)
+                
+                Spinner:
+                    size_hint:(.1,1)
+
+                    id:clrspinner
+                    text:"mode"
+                    values: ["Color", "Numbers"]
+                    on_text: root.clrchooser(clrspinner.text)
+                    halign:"center"
+                    option_cls: Factory.get("MySpinnerOption")
+                    background_color: utils.get_color_from_hex('#002B4A')
+
+                Display:
+                    size_hint:(.2,1)
+                    text:"Interval:"
+                    font_size: 30
+                    halign:"center"
+                CountDown:
+                    size_hint:(.1,1)
+                    id:clrinterval
+                    text: "1"
+                    halign:"center"
+                    font_size: 20
+                Display:
+                    size_hint:(.1,1)
+                    text:"to"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                CountDown:
+                    size_hint:(.1, 1)
+                    id:clrintervalto
+                    text: "1"
+                    halign:"center"
+                    font_size: 20
+                
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .1)
+
+                Pushbuttons:
+                    text:"start"
+                    id:clrbutton
+                    on_press: root.clrtoggle()
+                    halign:"center"
+                
+                Pushbuttons:
+                    text: "reset"
+                    halign:"center"
+                    on_press: root.clrreset()
+
+                Pushbuttons:
+                    text:"back"
+                    on_press: root.clrreset()
+                    on_press: root.manager.current = 'mainvisual'
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': .18, 'right':1}
+
+            on_press:Factory.ColorPop().open()
+
+
+<OneClrTimer>
+    FloatLayout:
+        BoxLayout:
+            orientation:"vertical"
+            BoxLayout:
+                size_hint:(1,1.1)
+                
+                Display:
+                    color:(1,1,1,1)
+                    id:onecolorlabel
+                    background_color:(0,43,71,0)
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    font_size: 600
+
+            BoxLayout:
+                size_hint: (1, .1)
+
+                CountDown:
+                    id:oneclrinput
+                    text:'00:00'
+                    halign:"center"      
+                    font_size: 20
+                    multiline: False
+                    on_focus: root.refereshoneclr()
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .1)
+
+                Display:
+                    size_hint:(.2,1)
+                    text:"Interval:"
+                    font_size: 30
+                    halign:"center"
+                CountDown:
+                    size_hint:(.1,1)
+                    id:oneclrinterval
+                    text: "5"
+                    halign:"center"
+                    font_size: 20
+                Display:
+                    size_hint:(.1,1)
+                    text:"to"
+                    font_size: 30
+                    halign:"center"
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex('#002B4A')
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                CountDown:
+                    size_hint:(.1, 1)
+                    id:oneclrintervalto
+                    text: "10"
+                    halign:"center"
+                    font_size: 20
+                
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:(1, .1)
+
+                Pushbuttons:
+                    text:"start"
+                    id:oneclrbutton
+                    on_press: root.oneclrtoggle()
+                    halign:"center"
+                
+                Pushbuttons:
+                    text: "reset"
+                    halign:"center"
+                    on_press: root.oneclrreset()
+
+                Pushbuttons:
+                    text:"back"
+                    on_press: root.oneclrreset()
+                    on_press: root.manager.current = 'mainvisual'
+        Pushbuttons:
+            text:"?"
+            size_hint:(.07,.04)
+            pos_hint:{'top': .18, 'right':1}
+            on_press:Factory.OneClrPop().open()
+
+
+
+    #style
+<Pushbuttons@Button>
+    halign:"center"
+    background_color: utils.get_color_from_hex('#002B4A')
+    color: 1,1,1,1
+
+<Display@Label>
+    canvas.before:
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: "images/ground.png"
+
+<CountDown@TextInput>
+    background_color: utils.get_color_from_hex('#002B4A')
+    canvas.before:
+        Color:
+            rgba: (1,1,1,1) #textcolor
+
+<MySpinnerOption@SpinnerOption>:
+    background_color: [0, 0, 1, 1]    # blue colour
+    background_down: ''
+
+
+#popups
+<SqdPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"Square Drill Info"
+    size_hint:(1,.5)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]Square Drill[/u]\nEnter Time and intervals\nThe numbers repersent anything, cones, shoes, shirts or marks. Doesn't matter. \nFace between 1 and 2, when if Coach tells you one or two, run down, get back to the middle.\nIf you cant make it back. run towards the next one, if its 2 or 3, crossover back.\nIf the next cone is horizontal to you, shuffle there.\n Try to make it to the cone and back to the middle.\n Go Hard."
+            font_name: "Impact"
+            markup: True
+
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss()
+
+
+<CODPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"CODDrill Info"
+    size_hint:(1,.5)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]COD Drill[/u]\nAll you need is a field.\nEnter Time and intervals.\nFace in the direction you want to start.\n Follow the instructions on the image.\n I use this to get my movement right and my feet working.\n Go Hard"
+            font_name: "Impact"
+            markup: True
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss()
+    
+<FourPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"4-Drill Info"
+    size_hint:(1,.7)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]4-Drill[/u]\nAll you need is a field.\nEnter Time and intervals\n Follow the instructions on the image.\n Go hard"
+            font_name: "Impact"
+            markup: True
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss()
+
+<HipPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"Hip Flip Info"
+    size_hint:(1,.7)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]Hip Flip[/u]\nAll you need is a field.\nEnter Time and intervals\n Flip to the direction Coach says, while you keep your eyes on the target.\n Go Hard"
+            font_name: "Impact"
+            markup: True
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss()
+
+<IvtPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"Interval Info"
+    size_hint:(1,.7)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]Interval Timer[/u]\nThis is an interval timer.\n you can either choose a time input or numbers, enter time or rounds, then time you want to work and time you and off.\n Go Hard"
+            font_name: "Impact"
+            markup: True
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss() 
+
+<DingPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"Ding Info"
+    size_hint:(1,.7)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]Go! Timer[/u]\nThis is a simple timer, I use it for warm ups or sprints.\n I jog around, when the ding goes off, I do a burpee and continue running till I'm gassed.\n Go Hard"
+            font_name: "Impact"
+            markup: True
+            
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss() 
+
+<SelectPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"Select Timer Info"
+    size_hint:(1,.7)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]Select Timer[/u]\nAdd the numbers or directions you want to add.\nEnter time and intervals.\nI use this for kickboxing combos, jabs as 1, cross as 2, hook as 3, lowkick as 4.\nGo Hard."
+            font_name: "Impact"
+            markup: True
+            
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss()
+
+<LinePop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"Linear Timer Info"
+    size_hint:(1,.7)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]Linear Timer[/u]\nEnter the time and add your numbers and directions\nI use this for when i want to practice combos. Jabs as 1, cross as 2, hook as 3, lowkick as 4.\nThen it repeats.\n Go Hard."
+            font_name: "Impact"
+            markup: True
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss() 
+
+<BeepPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"Beep Test Info"
+    size_hint:(1,.7)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]Beep Test[/u]\nSet up 2 cones, shirts, shoes or whatever.\nA double beep is a speed increase.\nTheres 22 levels.\nGo Hard"
+            font_name: "Impact"
+            markup: True
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss()
+
+<ColorPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"Flash Timer Info"
+    size_hint:(1,.7)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]Color Timer[/u]\nThis is one of my favourite features.\nOnly your fantasy is the limiter\nRed or 1could be a cone, a push up, a move, a crossover and so on.\nBlue or 2 could be anything too.\nI use this as different cones just like square drill, but I'm training though my eyes not ears\nGo Hard"
+            font_name: "Impact"
+            markup: True
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss()
+
+<OneClrPop@Popup>
+    auto_dismiss: True
+    title_color: (1,1,1,1)
+    background_color:(1,1,1,0)
+    title:"One Flash Info"
+    size_hint:(1,.7)
+    pos_hint:{'top':1}
+    BoxLayout:
+        orientation:"vertical"
+        Display:
+            size_hint:(1,.9)
+            halign:"center"
+            valign:"top"
+            text_size: self.size
+            text:"[u]Single Reaction[/u]\nThis is the ultimate creativity timer.\nI use this for my DLine work.\nI place my phone on the ground and get in my stance, when the timer flashes, i explode.\nThen i repeat.\n Go hard."
+            font_name: "Impact"
+            markup: True
+        Pushbuttons:
+            size_hint:(1,.1)
+            text:"Back"
+            on_release: root.dismiss()
